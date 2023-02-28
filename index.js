@@ -5,7 +5,7 @@ const app = express();
 // declaring the port where we want our server to listen rquest 
 const port = 8000;
 
-// use express router for routing
+// this is a middleware which tells the server to go at './routes/index' for any route starting with '/'
 app.use('/',require('./routes/index'));
 
 // telling sever to listen at port 
