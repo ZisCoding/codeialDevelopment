@@ -3,6 +3,18 @@
         <title> <%=title%> </title>
     </head>
     <body>
-        <h1>Codeail is live</h1>
+        <header>
+            <!-- including footer using ejs partials -->
+            <%- include('_header'); %>
+        </header>
+        
+        <h1> 
+            Codeail / Home 
+        </h1>
+
+        <footer>
+            <!-- including footer using ejs partials -->
+            <%- include('_footer'); %>
+        </footer>
     </body>
 </html>

@@ -1,5 +1,5 @@
 module.exports.profile = function(req,res){
-    res.render('profile.ejs',{
+    res.render('user_profile.ejs',{
         title:"profile"
     });
 }
