@@ -8,6 +8,11 @@ const port = 8000;
 // this is a middleware which tells the server to go at './routes/index' for any route starting with '/'
 app.use('/',require('./routes/index'));
 
+// setting the view engine as ejs
+app.set('view engine', 'ejs');
+// setting the path where to find views
+app.set('views','./views');
+
 // telling sever to listen at port 
 async function listenRequest()
 {
