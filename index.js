@@ -6,7 +6,8 @@ const app = express();
 const port = 8000;
 // importing express-ejs-layouts after installing it through ejs
 const expressLayouts = require('express-ejs-layouts');
-
+//importing mongoose 
+const db= require('./config/mongoose');
 
 // defining where to look for statics files css,js
 app.use(express.static('./assets'));
