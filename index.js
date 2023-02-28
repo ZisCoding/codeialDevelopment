@@ -7,11 +7,17 @@ const port = 8000;
 // importing express-ejs-layouts after installing it through ejs
 const expressLayouts = require('express-ejs-layouts');
 
+
 // defining where to look for statics files css,js
 app.use(express.static('./assets'));
 
+
 // telling express server to use expressLayouts we have to put it b4 route
 app.use(expressLayouts);
+
+//extracting style and script from sub pages and putting it into the correct place in the layout
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
 
 // this is a middleware which tells the server to go at './routes/index' for any route starting with '/'

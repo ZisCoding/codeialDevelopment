@@ -3,6 +3,8 @@
 <html>
     <head>
         <link rel="stylesheet"  href="/css/layout.css">
+        <!-- the stylesheet of every body which will be fetched we be extracted from body and put here -->
+        <%- style %>
         <title> <%=title%> </title>
     </head>
     <body>
@@ -14,6 +16,8 @@
 
         <!-- including footer using ejs partials -->
         <%- include('_footer'); %>
-
+        
+        <!-- the script of every body which will be fetched we be extracted from body and put here -->
+        <%- script %>
     </body>
 </html>
