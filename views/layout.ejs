@@ -1,0 +1,18 @@
+<!-- this is the layout for all the pages i.e. the <% body %> we have defined inside the body tag is variable and its value is will come from home,ejs or user_profile.ejs etc accroding to the page which will get called   -->
+
+<html>
+    <head>
+        <title> <%=title%> </title>
+    </head>
+    <body>
+
+        <!-- including footer using ejs partials -->
+        <%- include('_header'); %>
+        
+        <%- body %>
+
+        <!-- including footer using ejs partials -->
+        <%- include('_footer'); %>
+
+    </body>
+</html>

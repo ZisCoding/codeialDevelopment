@@ -4,9 +4,16 @@ const express = require('express');
 const app = express();
 // declaring the port where we want our server to listen rquest 
 const port = 8000;
+// importing express-ejs-layouts after installing it through ejs
+const expressLayouts = require('express-ejs-layouts');
+
+// telling express server to use expressLayouts we have to put it b4 route
+app.use(expressLayouts);
+
 
 // this is a middleware which tells the server to go at './routes/index' for any route starting with '/'
 app.use('/',require('./routes/index'));
+
 
 // setting the view engine as ejs
 app.set('view engine', 'ejs');
