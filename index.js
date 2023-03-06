@@ -1,13 +1,19 @@
 // importing express after installing it through npm install express
 const express = require('express');
+//importing the cookie parser after intalling
+const cookieParse = require('cookie-parser')
 // firing express server
 const app = express();
 // declaring the port where we want our server to listen rquest 
 const port = 8000;
 // importing express-ejs-layouts after installing it through ejs
-const expressLayouts = require('express-ejs-layouts');
+const expressLayouts = require ('express-ejs-layouts');
 //importing mongoose 
 const db= require('./config/mongoose');
+
+app.use(express.urlencoded());
+
+app.use(cookieParse());
 
 // defining where to look for statics files css,js
 app.use(express.static('./assets'));
