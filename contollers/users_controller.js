@@ -2,7 +2,8 @@ const User = require('../models/user');
 
 module.exports.profile = function(req,res){
     res.render('user_profile.ejs',{
-        title:"profile"
+        title:"profile",
+        user:req.user//accesding the user which we set in response at passport config(setAuthenticatedUser)
     });
 }
 
@@ -12,12 +13,24 @@ module.exports.timeLine = function(req,res){
 
 module.exports.signUp = function(req,res) {
 
+    // if users is already signed in then redirect to profile
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    }
+
     res.render('user_sign_up.ejs',{
         title: 'signup'
     });
 }
 
 module.exports.signIn = function(req,res) {
+
+    // if users is already signed in then redirect to profile
+   if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    }
 
     res.render('user_sign_in.ejs',{
         title: 'signup'
@@ -61,5 +74,16 @@ module.exports.create = function(req,res){
 
 
 module.exports.createSession = function(req,res){
+    return res.redirect('/users/profile');
+}
+
+module.exports.destroySession = function(req,res,next){
+     
+    // this function is givin by passport
+     req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+      });
+
     return res.redirect('/');
 }

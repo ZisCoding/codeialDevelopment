@@ -7,7 +7,10 @@ const router = express.Router();
 
 const userController = require('../contollers/users_controller');
 
-router.get('/profile',userController.profile);
+
+router.get('/profile', 
+passport.checkAuthentication , //using the fucntion we defined in passport config
+userController.profile);
 
 router.get('/timeline',userController.timeLine);
 
@@ -22,5 +25,7 @@ router.post('/create-session',passport.authenticate(
     'local',
     {failureRedirect: '/users/sign-in'}
 ),userController.createSession);
+
+router.get('/sign-out',userController.destroySession);
 
 module.exports = router;

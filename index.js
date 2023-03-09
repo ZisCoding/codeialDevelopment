@@ -16,8 +16,8 @@ const session = require('express-session')
 const passport = require('passport');
 // required the local passport strat which we defined
 const passportLocal = require('./config/passport-local-strategy')
-
-// passportLocal.log();
+//requiring connect mongo to store our session cookies so that it wont get erased after restarting server
+const MongoStore = require('connect-mongo');
 
 app.use(express.urlencoded());
 
@@ -48,7 +48,12 @@ app.use(session({
     resave: false,
     cookie:{ 
         maxAge: (1000 * 60 * 100) // defining the age of cookie in mili sec after this user will automatically signed out
-    }
+    },
+    // storing seesion in mongoDB
+    store: MongoStore.create({
+        mongoUrl:'mongodb://127.0.0.1:27017/codeial_development',
+        autoRemove: 'disabled',
+    })
 }));
 
 // telling the app to use passport
