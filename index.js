@@ -10,6 +10,14 @@ const port = 8000;
 const expressLayouts = require ('express-ejs-layouts');
 //importing mongoose 
 const db= require('./config/mongoose');
+// requiring the session to work with passport and create session cookies
+const session = require('express-session')
+// requiring passport for authentication
+const passport = require('passport');
+// required the local passport strat which we defined
+const passportLocal = require('./config/passport-local-strategy')
+
+// passportLocal.log();
 
 app.use(express.urlencoded());
 
@@ -27,14 +35,29 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 
-// this is a middleware which tells the server to go at './routes/index' for any route starting with '/'
-app.use('/',require('./routes/index'));
-
-
 // setting the view engine as ejs
 app.set('view engine', 'ejs');
 // setting the path where to find views
 app.set('views','./views');
+
+// using session as the middleware to encrypt the coookie
+app.use(session({
+     name: 'codeial', // definin name of cookie
+    secret: 'blahsomething', // encryption key will change it later while production stage 
+    saveUninitialized: false, 
+    resave: false,
+    cookie:{ 
+        maxAge: (1000 * 60 * 100) // defining the age of cookie in mili sec after this user will automatically signed out
+    }
+}));
+
+// telling the app to use passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// this is a middleware which tells the server to go at './routes/index' for any route starting with '/'
+app.use('/',require('./routes/index'));
+
 
 // telling sever to listen at port 
 async function listenRequest()

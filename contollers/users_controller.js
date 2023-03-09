@@ -30,13 +30,13 @@ module.exports.create = function(req,res){
         return res.redirect('back');
     }
 
-    User.findOne({email: req.body.userName})
+    User.findOne({email: req.body.email})
     .then((user)=>{
         
         if(!user){
            
             User.create({
-                email:req.body.userName,
+                email:req.body.email,
                 password: req.body.password,
                 name: req.body.name
             })
@@ -44,7 +44,7 @@ module.exports.create = function(req,res){
                 return res.redirect('/users/sign-in');
             })
             .catch((err)=>{
-                console.log("error in creating user"); 
+                console.log("error in creating user",err); 
                 return res.redirect('back');
             });
         }else{
@@ -61,5 +61,5 @@ module.exports.create = function(req,res){
 
 
 module.exports.createSession = function(req,res){
-
+    return res.redirect('/');
 }
