@@ -1,0 +1,17 @@
+footer {
+  height: 70px;
+  background-color: gray;
+  font-family: sans-serif;
+  padding: 1rem .5rem;
+  display: flex;
+  color: white;
+  font-weight: bold; }
+  footer p {
+    margin: 0px;
+    margin-right: 1rem; }
+  footer nav {
+    display: flex;
+    flex-direction: column; }
+    footer nav a {
+      color: white;
+      text-decoration: none; }

@@ -6,6 +6,8 @@ const cookieParse = require('cookie-parser')
 const app = express();
 // declaring the port where we want our server to listen rquest 
 const port = 8000;
+// requiring path
+const path = require('path');
 // importing express-ejs-layouts after installing it through ejs
 const expressLayouts = require ('express-ejs-layouts');
 //importing mongoose 
@@ -18,6 +20,19 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy')
 //requiring connect mongo to store our session cookies so that it wont get erased after restarting server
 const MongoStore = require('connect-mongo');
+// requring sass middleware
+const sassMiddleware = require('node-sass-middleware');
+
+// using sass middleware which compiles files written in sass to css
+app.use(sassMiddleware({
+    src: path.join(__dirname,'/assets/scss'), // where to look for scss files
+    dest:  path.join(__dirname,'/assets/css'), // where to put file after compliling
+    debug: true, // show error 
+    outputStyle: 'extended',
+    prefix:'/css'
+}));
+
+
 
 app.use(express.urlencoded());
 

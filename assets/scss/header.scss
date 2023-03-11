@@ -1,0 +1,24 @@
+header{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1186f0;
+    padding: 0rem 0.5em;
+    font-family: sans-serif;
+    color: white;
+
+    ul{
+        display: flex;
+        justify-content: space-between;
+        width:15%;
+
+    }
+
+    a{
+        color: white;
+        text-decoration: none;
+        padding: 0px 0.1em;
+    }
+
+}

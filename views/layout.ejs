@@ -2,9 +2,9 @@
 
 <html>
     <head>
-        <link rel="stylesheet"  href="/css/layout.css">
         <!-- the stylesheet of every body which will be fetched we be extracted from body and put here -->
         <%- style %>
+        <link rel="stylesheet" type="text/css" href="/css/layout.css">
         <title> <%=title%> </title>
     </head>
     <body>
@@ -12,7 +12,9 @@
         <!-- including footer using ejs partials -->
         <%- include('_header'); %>
         
+       <main>
         <%- body %>
+       </main>
 
         <!-- including footer using ejs partials -->
         <%- include('_footer'); %>
