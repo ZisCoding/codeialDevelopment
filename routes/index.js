@@ -20,4 +20,7 @@ router.use('/users',require('./users'));
 // for all posts related routing this middleware will be used
 router.use('/posts',require('./posts'));
 
+// for all  related routing this middleware will be used
+router.use('/comments',require('./comments'))
+
 module.exports = router;

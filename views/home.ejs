@@ -19,12 +19,16 @@ Codeail / Home
                     <p>
                         <%=posts[i].content%>
                         <h6>Posted by <%=posts[i].user.name%></h6>
-
-                        <form action="/posts/comment" method="POST" >
-                            <textarea name="comment"  cols="30" rows="3"></textarea>
-                            <input type="submit" value="Comment">
-                        </form>
                     </p>
+                    <div class="post-comments">
+                        <% if(locals.user) {%>
+                            <form action="/comments/create" method="POST" >
+                                <textarea name="comment"  cols="30" rows="3"></textarea>
+                                <input type="hidden" name="post" value="<%=posts[i]._id%>">
+                                <input type="submit" value="Comment">
+                            </form>
+                    <%}%>
+                    </div>
                 </li>
         
             <%} %>

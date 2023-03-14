@@ -11,7 +11,15 @@ const postSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    // storing the id's of all the comment which belongs to the post  here comments is an array containig an obj
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+        }
+    ]
+    
 },
 {
     // timesstamps as usual will store the timeline of each post
