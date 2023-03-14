@@ -10,6 +10,7 @@ module.exports.home=function (req, res){
     .then((posts)=>{
         return res.render('home.ejs',{
             title:"Home",
+            user:req.user,
             posts:posts
         });
     })
@@ -18,32 +19,6 @@ module.exports.home=function (req, res){
     })
 
     
-
-    // if(req.user){
-    //     Post.find({user: req.user._id})
-    //     .then((posts)=>{
-    //         console.log(posts);
-    //         return res.render('home.ejs',{
-    //             title:"Home",
-    //             user: req.user,
-    //             posts: posts
-    //         });
-    //     })
-    //     .catch((err)=>{
-    //         console.log("Error in finding posts")
-    //         return res.render('home.ejs',{
-    //             title:"Home",
-    //             user: req.user,
-    //             posts: undefined
-    //         });
-    //     })
-    // }
-    // else
-    // {
-        
-    //     });
-    // }
-
     
 }
 

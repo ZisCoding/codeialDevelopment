@@ -11,25 +11,34 @@ Codeail / Home
 
     <h1>Posts</h4>
 
-    <%if(posts){%>
-    
-        <% for(let i=0 ; i<posts.length ; i++) {%>
+    <div id="post-list-contaier">
+        <ul>
+            <% for(let i=0 ; i<posts.length ; i++) {%>
+            
+                <li style="border-bottom: 2px solid black;">
+                    <p>
+                        <%=posts[i].content%>
+                        <h6>Posted by <%=posts[i].user.name%></h6>
+
+                        <form action="/posts/comment" method="POST" >
+                            <textarea name="comment"  cols="30" rows="3"></textarea>
+                            <input type="submit" value="Comment">
+                        </form>
+                    </p>
+                </li>
         
-            <div style="border-bottom: 2px solid black;">
-                <h3><%=posts[i].content%></h3>
-                <p>Posted by <%=posts[i].user.name%></p>
-            </div>
+            <%} %>
+        </ul>
+    </div>
+
+    <%if(locals.user){%>
+        <form action="/posts/create" id="new-post-form" method="post">
+
+            <textarea name="content" cols="30" rows="3" placeholder="Type here...."></textarea> 
     
-        <%} %>
-
+            <input type="submit" value="Post">
+    
+        </form>
     <%}%>
-
-    <form action="/posts/create" id="new-post-form" method="post">
-
-        <textarea name="content" cols="30" rows="3" placeholder="Type here...."></textarea> 
-
-        <input type="submit" value="Post">
-
-    </form>
 
 </section>
