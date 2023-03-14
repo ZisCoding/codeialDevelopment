@@ -4,7 +4,32 @@
 
 
 <h1> 
-    Codeail / Home 
+Codeail / Home 
 </h1>
 
- 
+<section id="feed-post">
+
+    <h1>Posts</h4>
+
+    <%if(posts){%>
+    
+        <% for(let i=0 ; i<posts.length ; i++) {%>
+        
+            <div style="border-bottom: 2px solid black;">
+                <h3><%=posts[i].content%></h3>
+                <p>Posted by <%=posts[i].user.name%></p>
+            </div>
+    
+        <%} %>
+
+    <%}%>
+
+    <form action="/posts/create" id="new-post-form" method="post">
+
+        <textarea name="content" cols="30" rows="3" placeholder="Type here...."></textarea> 
+
+        <input type="submit" value="Post">
+
+    </form>
+
+</section>

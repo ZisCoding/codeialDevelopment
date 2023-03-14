@@ -1,3 +1,16 @@
-module.exports.caption = function (req,res){
-    res.end('<h1>This is a post caption </h1>')
+const Post = require('../models/post');
+
+module.exports.create = function (req,res){
+    Post.create({
+        content: req.body.content,
+        user: req.user._id
+    })
+    .then((post)=>{
+        return res.redirect('back');
+    })
+    .catch((err)=>{
+        console.error("error in creating post",err);
+        return res.redirect('back');
+    });
+
 }
