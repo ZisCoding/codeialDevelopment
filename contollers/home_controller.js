@@ -6,7 +6,15 @@ const Post = require("../models/post")
 module.exports.home=function (req, res){
 
     // populate will insert the user to the recieved post obj corresponding to the user id in the user field of post
-    Post.find({}).populate('user').exec()
+    Post.find({})
+    .populate('user')
+    .populate({
+        path : 'comments',
+        populate:{ // nesting the populate
+            path: 'user'
+        }
+    })
+    .exec()
     .then((posts)=>{
         return res.render('home.ejs',{
             title:"Home",
