@@ -27,6 +27,11 @@ Codeail / Home
             
                 <li style="border-bottom: 2px solid black;">
                     <p>
+                        <% if(locals.user && locals.user.id==posts[i].user.id){%>
+                            <small>
+                                <a href="/posts/destroy/<%=posts[i].id%>">Delete</a>
+                            </small><br>
+                        <%}%>
                         <%=posts[i].content%>
                         <h6>Posted by <%=posts[i].user.name%></h6>
                     </p>
