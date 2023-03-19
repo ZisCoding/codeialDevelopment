@@ -32,7 +32,33 @@ module.exports.create = (req,res)=>{
     .finally(()=>{
         res.redirect('/');
     })
+}
 
-    
+module.exports.destroy = function(req,res){
 
+    // finding id the comment exist which we want to delete
+    Comment.findById(req.params.id)
+    .then((comment)=>{
+
+        // checking if the comment belongs to the same use who is deleting it 
+        if(req.user.id == comment.user){
+
+            // updating the comments array of the corresponding post
+            Post.updateOne({
+                _id: comment.post, // finding the post on which the comment is done
+                $pull: {
+                    comments: comment._id // pulling out the comment id of the comment from the comments array
+                } 
+            });
+
+            // deleting the comment
+            comment.deleteOne();
+        }
+    })
+    .catch((err)=>{
+        console.error("error in finding the comment",err);
+    })
+    .finally(()=>{
+        res.redirect('back');
+    })
 }

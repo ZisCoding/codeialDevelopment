@@ -1,14 +1,28 @@
 const User = require('../models/user');
 
 module.exports.profile = function(req,res){
-    res.render('user_profile.ejs',{
+
+    User.findById(req.params.id)
+    .then((user)=>{
+        res.render('user_profile.ejs',{
         title:"profile",
-        user:req.user//accesding the user which we set in response at passport config(setAuthenticatedUser)
-    });
+        user:req.user,//accessing the user which we set in response at passport config(setAuthenticatedUser)
+        profile_user: user
+        });
+    })
 }
 
-module.exports.timeLine = function(req,res){
-    res.end('<h1>user Timeline</h1>');
+module.exports.update = function(req,res){
+    // checking if the user in params is same as the logged in user 
+    if(req.user.id==req.params.id){
+        User.findByIdAndUpdate(req.params.id,req.body)
+        .then((user)=>{
+            return res.redirect('back');
+        })
+    }else{
+        // sending this error if some fidelled in the front end
+        res.status(401).send('Unauthorized');
+    }
 }
 
 module.exports.signUp = function(req,res) {

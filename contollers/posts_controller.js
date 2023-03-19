@@ -21,7 +21,7 @@ module.exports.destroy = function(req, res){
     .then((post)=>{
 
         // cheking if the user deleting the post is autherised to delete it or not 
-        if(post.user == req.user.id) // we choose user.id here instead of user._id because user.id gives a a string of the objectid because we habe to compare it with a string
+        if(post.user == req.user.id) // we choose user.id here instead of user._id because user.id gives a a string of the objectid because we have to compare it with a string
         {
 
             // this will delete the post from db

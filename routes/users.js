@@ -8,11 +8,13 @@ const router = express.Router();
 const userController = require('../contollers/users_controller');
 
 
-router.get('/profile', 
+router.get('/profile/:id', 
 passport.checkAuthentication , //using the fucntion we defined in passport config
 userController.profile);
 
-router.get('/timeline',userController.timeLine);
+router.post('/update/:id', 
+passport.checkAuthentication , //using the fucntion we defined in passport config
+userController.update);
 
 router.get('/sign-up',userController.signUp);
 
@@ -27,6 +29,5 @@ router.post('/create-session',passport.authenticate(
 ),userController.createSession);
 
 router.get('/sign-out',userController.destroySession);
-
 
 module.exports = router;

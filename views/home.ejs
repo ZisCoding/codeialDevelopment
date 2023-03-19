@@ -22,48 +22,20 @@ Codeail / Home
     <%}%>
 
     <div id="post-list-contaier">
-        <ul>
-            <% for(let i=0 ; i<posts.length ; i++) {%>
-            
-                <li style="border-bottom: 2px solid black;">
-                    <p>
-                        <% if(locals.user && locals.user.id==posts[i].user.id){%>
-                            <small>
-                                <a href="/posts/destroy/<%=posts[i].id%>">Delete</a>
-                            </small><br>
-                        <%}%>
-                        <%=posts[i].content%>
-                        <h6>Posted by <%=posts[i].user.name%></h6>
-                    </p>
-                    <div class="post-comments">
-                        <h3>Comments</h3>
-       
-                        <% if(locals.user) {%>
-                        <form action="/comments/create" method="POST" >
-                            <textarea name="comment"  cols="30" rows="3" required></textarea>
-                            <input type="hidden" name="post" value="<%=posts[i]._id%>">
-                            <input type="submit" value="Comment">
-                        </form>
-
-                        <div class="post-comments-list">
-                            <ul id="post-comments-<%=posts[i]._id%>"> 
-                                <% for(let j=0 ; j<posts[i].comments.length ; j++) {%>
-                                    <li>
-                                        <p>
-                                            <small><%=posts[i].comments[j].user.name%></small> <br>
-                                            <%=posts[i].comments[j].content%>
-                                        </p>
-                                    </li>
-                                <%}%>
-                            </ul> 
-                        </div>
-                    <%}%>
-                    </div>
-                </li>
         
-            <%}%>
-        </ul>
+        <!-- dividing the code into partials -->
+        <%- include('_post') -%>
     </div>
 
+</section>
 
+<section id="user-friends">
+    <h4>Firends</h4>
+    <% for(u of all_users) {%>
+
+        <p>
+            <a href="/users/profile/<%= u.id%>"><%= u.name %></a>
+        </p>
+
+    <%}%>
 </section>

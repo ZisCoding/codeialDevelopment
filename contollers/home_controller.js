@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Post = require("../models/post")
-
+const User = require('../models/user');
 //exporting different actions to be used 
 
 module.exports.home=function (req, res){
@@ -16,11 +16,18 @@ module.exports.home=function (req, res){
     })
     .exec()
     .then((posts)=>{
-        return res.render('home.ejs',{
-            title:"Home",
-            user:req.user,
-            posts:posts
+        
+        // finding all users to show on the the home page
+        User.find()
+        .then((users)=>{
+            return res.render('home.ejs',{
+                title:"Home",
+                user:req.user,
+                posts:posts,
+                all_users: users
+            });
         });
+
     })
     .catch((err)=>{
         console.log("error in finding posts",err);
