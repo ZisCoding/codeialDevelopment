@@ -1,41 +1,41 @@
 <!-- all other content of this page is defined in layout.ejs  -->
 
 <!-- this tag will be mode to using extractStyles in codeial/index.js -->
+<link rel="stylesheet" href="/css/home.css">
 
+<div id="home-contianer">
 
-<h1> 
-Codeail / Home 
-</h1>
+    <section id="feed-post">
 
-<section id="feed-post">
+        <h1>Posts</h4>
 
-    <h1>Posts</h4>
+        <%if(locals.user){%>
+            <form action="/posts/create" id="new-post-form" method="post">
 
-    <%if(locals.user){%>
-        <form action="/posts/create" id="new-post-form" method="post">
-
-            <textarea name="content" cols="30" rows="3" placeholder="Type here...." required></textarea> 
-    
-            <input type="submit" value="Post">
-    
-        </form>
-    <%}%>
-
-    <div id="post-list-contaier">
+                <textarea name="content" cols="30" rows="3" placeholder="Type here...." required></textarea> 
         
-        <!-- dividing the code into partials -->
-        <%- include('_post') -%>
-    </div>
+                <input type="submit" value="Post">
+        
+            </form>
+        <%}%>
 
-</section>
+        <div id="post-list-contaier">
+            
+            <!-- dividing the code into partials -->
+            <%- include('_post') -%>
+        </div>
 
-<section id="user-friends">
-    <h4>Firends</h4>
-    <% for(u of all_users) {%>
+    </section>
 
-        <p>
-            <a href="/users/profile/<%= u.id%>"><%= u.name %></a>
-        </p>
+    <section id="user-friends">
+        <h4>Firends</h4>
+        <% for(u of all_users) {%>
 
-    <%}%>
-</section>
+            <p>
+                <a href="/users/profile/<%= u.id%>"><%= u.name %></a>
+            </p>
+
+        <%}%>
+    </section>
+
+</div>

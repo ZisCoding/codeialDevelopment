@@ -10,7 +10,6 @@ const homeController = require('../contollers/home_controller');
 
 // routing to the home controller 
 router.get('/',homeController.home);
-router.get('/about',homeController.about);
 
 // using the other routing files to route for different adresses 
 

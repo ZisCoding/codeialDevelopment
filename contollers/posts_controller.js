@@ -16,10 +16,11 @@ module.exports.create = function (req,res){
 
 }
 
-module.exports.destroy = function(req, res){
-    Post.findById(req.params.id)
-    .then((post)=>{
-
+module.exports.destroy = async function(req, res){
+   
+    try{
+        let post = await Post.findById(req.params.id)
+   
         // cheking if the user deleting the post is autherised to delete it or not 
         if(post.user == req.user.id) // we choose user.id here instead of user._id because user.id gives a a string of the objectid because we have to compare it with a string
         {
@@ -28,17 +29,14 @@ module.exports.destroy = function(req, res){
             post.deleteOne();
 
             // this will remove all the comment having post id of the deleted post
-            Comment.deleteMany({post : req.params.id})
-            .catch((err)=>{
-                console.error("wrror in deleting post",err);
-            })
+            await Comment.deleteMany({post : req.params.id})
+            res.redirect('back');
+        }else{
+            return res.redirect('back')
         }
+    }catch(err){
+        console.log("Error",err);
+        return;
+    }
 
-    })
-    .catch((err)=>{
-        console.error("error in finding the post", err);
-    })
-    .finally(()=>{
-        res.redirect('back');
-    });
 }

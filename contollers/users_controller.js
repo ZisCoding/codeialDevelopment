@@ -43,9 +43,10 @@ module.exports.signIn = function(req,res) {
     // if users is already signed in then redirect to profile
    if(req.isAuthenticated())
     {
+        console.log(req.user.id);
         return res.redirect('/users/profile');
     }
-
+    
     res.render('user_sign_in.ejs',{
         title: 'signup'
     });
@@ -88,7 +89,7 @@ module.exports.create = function(req,res){
 
 
 module.exports.createSession = function(req,res){
-    return res.redirect('/users/profile');
+    return res.redirect(`/users/profile/${req.user.id}`);
 }
 
 module.exports.destroySession = function(req,res,next){
@@ -99,6 +100,5 @@ module.exports.destroySession = function(req,res,next){
         res.redirect('/');
       });
 
-    return res.redirect('/');
 }
 

@@ -3,42 +3,33 @@ const Post = require("../models/post")
 const User = require('../models/user');
 //exporting different actions to be used 
 
-module.exports.home=function (req, res){
+module.exports.home= async function (req, res){
 
     // populate will insert the user to the recieved post obj corresponding to the user id in the user field of post
-    Post.find({})
-    .populate('user')
-    .populate({
-        path : 'comments',
-        populate:{ // nesting the populate
-            path: 'user'
-        }
-    })
-    .exec()
-    .then((posts)=>{
+   try{
+        let posts = await Post.find({})
+        .populate('user')
+        .populate({
+            path : 'comments',
+            populate:{ // nesting the populate
+                path: 'user'
+            }
+        })
         
         // finding all users to show on the the home page
-        User.find()
-        .then((users)=>{
-            return res.render('home.ejs',{
-                title:"Home",
-                user:req.user,
-                posts:posts,
-                all_users: users
-            });
+        let users = await User.find()
+
+        return res.render('home.ejs',{
+            title:"Home",
+            user:req.user,
+            posts:posts,
+            all_users: users
         });
-
-    })
-    .catch((err)=>{
-        console.log("error in finding posts",err);
-    })
-
-    
-    
-}
-
-module.exports.about=function (req, res){
-    return res.end('<h1>This is the about</h1>');
+   }catch(err){
+        console.log("Error",err);
+        
+        return;
+   }
 }
 
 
