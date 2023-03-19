@@ -89,6 +89,7 @@ module.exports.create = function(req,res){
 
 
 module.exports.createSession = function(req,res){
+    req.flash('success','Logged in Successfull');
     return res.redirect(`/users/profile/${req.user.id}`);
 }
 
@@ -97,6 +98,7 @@ module.exports.destroySession = function(req,res,next){
     // this function is givin by passport
      req.logout(function(err) {
         if (err) { return next(err); }
+        req.flash('success','Logged out Successfull')
         res.redirect('/');
       });
 

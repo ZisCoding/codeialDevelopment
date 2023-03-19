@@ -22,6 +22,10 @@ const passportLocal = require('./config/passport-local-strategy')
 const MongoStore = require('connect-mongo');
 // requring sass middleware
 const sassMiddleware = require('node-sass-middleware');
+// require connect falsh to show the flash messages
+const flash = require('connect-flash')
+// requiring out custom middleware
+const customMware = require('./config/middleware');
 
 // using sass middleware which compiles files written in sass to css
 app.use(sassMiddleware({
@@ -57,7 +61,7 @@ app.set('views','./views');
 
 // using session as the middleware to encrypt the coookie
 app.use(session({
-     name: 'codeial', // definin name of cookie
+    name: 'codeial', // definin name of cookie
     secret: 'blahsomething', // encryption key will change it later while production stage 
     saveUninitialized: false, 
     resave: false,
@@ -74,6 +78,10 @@ app.use(session({
 // telling the app to use passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// we have to use flash after session and before routes beacuse it uses session
+app.use(flash());
+app.use(customMware.setFlash);
 
 // this is a middleware which tells the server to go at './routes/index' for any route starting with '/'
 app.use('/',require('./routes/index'));
