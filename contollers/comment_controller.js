@@ -21,13 +21,15 @@ module.exports.create = async (req,res)=>{
             post.comments.push(comment);
             // after updating something is db documennt we have to call save 
             post.save();
+            req.flash('success','Comment created successfully'); // setting flash message
             res.redirect('/');
         }else{
-            res.redirect('/');
+            req.flash('success',"You aren't authorized to comment on this post");
+            return res.redirect('/')
         }
     }catch(err){
-        console.log("Error",err);
-        return;
+        req.flash('error','Error in creating comment'); // setting flash message
+        return res.redirect('/');
     }
 
     
@@ -52,13 +54,15 @@ module.exports.destroy = async function(req,res){
 
             // deleting the comment
             comment.deleteOne();
+            req.flash('success','Comment deleted successfully'); // setting flash message
             res.redirect('back');
         }else{
+            req.flash('success',"You aren't authorized to delete this comment");
             res.redirect('back');
         }
     }catch(err){
-        console.log("Error",err);
-        return ;
+        req.flash('error','Error in deleting comment'); // setting flash message
+        res.redirect('back');
     }
    
 }

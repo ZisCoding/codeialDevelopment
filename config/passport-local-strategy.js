@@ -10,11 +10,13 @@ const User = require('../models/user')
 //defining the local strategy in the passport object which we created in the starting for authentication
 passport.use(new localStrategy({
     usernameField: 'email', // telling to look at email property of request for the username
-    passwordField:'password'// telling to look at password property of request for the password
+    passwordField:'password',// telling to look at password property of request for the password
+    passReqToCallback: true // it will allow us to pass the req in the cb function at the first argument
+    
     },
 
     // the password and username fetched above will be passed to this cb function
-    function(email,password,done){
+    function(req,email,password,done){
         //finding the user
         User.findOne({email: email})
         .then((user)=>{
@@ -25,13 +27,13 @@ passport.use(new localStrategy({
             }
             // if user not found or password is incorrect
             else{
-                console.log("Invalid Username/Password");
+                req.flash('error',"Invalid Username/Password"); // setting the flash message
                 return done(null,false);
             }
         })
         // if error in finding user
         .catch(err=>{
-            console.log("Error in finding user --> passport");
+            req.flash('error',err); // setting the error in the flash message
             return done(err);
         });
     }

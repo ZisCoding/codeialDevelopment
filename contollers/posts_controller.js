@@ -7,10 +7,11 @@ module.exports.create = function (req,res){
         user: req.user._id
     })
     .then((post)=>{
+        req.flash('success','Post created successfully'); // setting flash message
         return res.redirect('back');
     })
     .catch((err)=>{
-        console.error("error in creating post",err);
+        req.flash('error','Error in creating post'); // setting flash message
         return res.redirect('back');
     });
 
@@ -30,13 +31,16 @@ module.exports.destroy = async function(req, res){
 
             // this will remove all the comment having post id of the deleted post
             await Comment.deleteMany({post : req.params.id})
+            req.flash('success',"Post deleted successfully");
             res.redirect('back');
         }else{
+            req.flash('success',"You aren't authorized to delete this post");
             return res.redirect('back')
         }
     }catch(err){
-        console.log("Error",err);
-        return;
+        req.flash("error","Error in deleting post");
+        
+        return res.redirect('back');
     }
 
 }
