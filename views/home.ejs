@@ -19,10 +19,16 @@
             </form>
         <%}%>
 
-        <div id="post-list-contaier">
+        <div id="post-list-container">
             
-            <!-- dividing the code into partials -->
-            <%- include('_post') -%>
+            <ul>
+                <% for(post of posts) {%>
+
+                    <!-- dividing the code into partials -->
+                    <%- include('_post') -%>
+
+                <%}%>
+            </ul>
         </div>
 
     </section>
@@ -39,3 +45,5 @@
     </section>
 
 </div>
+
+<script src="/js/home_post.js"></script>

@@ -2,11 +2,24 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 
 module.exports.create = function (req,res){
+    
     Post.create({
         content: req.body.content,
         user: req.user._id
     })
     .then((post)=>{
+
+        // checking if the request is a xhr request i.e. an ajax request i.e. a xmlhttp request 
+        if(req.xhr) {
+            // this is the way of returning the json data
+            return res.status(200).json({
+                data:{
+                    post: post
+                },
+                message : 'success'
+            })
+        }
+
         req.flash('success','Post created successfully'); // setting flash message
         return res.redirect('back');
     })
