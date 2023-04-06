@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const User = require('../models/user');
 
 module.exports.create = function (req,res){
     
@@ -9,19 +10,27 @@ module.exports.create = function (req,res){
     })
     .then((post)=>{
 
-        // checking if the request is a xhr request i.e. an ajax request i.e. a xmlhttp request 
-        if(req.xhr) {
-            // this is the way of returning the json data
+        // populating post to get the user's name
+        post.populate('user')
+        .then((populatedPost)=>{
             return res.status(200).json({
                 data:{
-                    post: post
+                    // sending the post without password
+                    post: {
+                        content: populatedPost.content,
+                        username: populatedPost.user.name,
+                        _id: populatedPost._id 
+                    }, 
                 },
-                message : 'success'
-            })
-        }
-
-        req.flash('success','Post created successfully'); // setting flash message
-        return res.redirect('back');
+                message : 'success',
+                flash: {
+                    success: "Post created successfully",
+                }
+            });
+        })
+        .catch((error)=>{
+            console.log("error in populating post",error);
+        });
     })
     .catch((err)=>{
         req.flash('error','Error in creating post'); // setting flash message
@@ -44,6 +53,20 @@ module.exports.destroy = async function(req, res){
 
             // this will remove all the comment having post id of the deleted post
             await Comment.deleteMany({post : req.params.id})
+
+            // cheking if the request is an xhr request and handling it according to that
+            if(req.xhr){
+                return res.status(200).json({
+                    data: {
+                        postId:req.params.id 
+                    },
+                    message: 'Post deleted',
+                    flash: {
+                        success: 'Post deleted successfully'
+                    }
+                });
+            }
+
             req.flash('success',"Post deleted successfully");
             res.redirect('back');
         }else{

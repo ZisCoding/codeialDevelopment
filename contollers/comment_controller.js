@@ -21,8 +21,29 @@ module.exports.create = async (req,res)=>{
             post.comments.push(comment);
             // after updating something is db documennt we have to call save 
             post.save();
-            req.flash('success','Comment created successfully'); // setting flash message
-            res.redirect('/');
+            
+            //populating the commebt to get user name
+            let populatedComment = await comment.populate('user')
+            
+
+            // checking if the request is a xhr request
+            if(req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment: comment,
+                        user_name: populatedComment.user.name
+                    },
+                    message: 'comment created successfully',
+                    flash: {
+                        success: "Comment created successfully"
+                    }
+                })
+                
+            }else{
+                req.flash('success','Comment created successfully'); // setting flash message
+                res.redirect('/');
+            }
+
         }else{
             req.flash('success',"You aren't authorized to comment on this post");
             return res.redirect('/')
@@ -54,8 +75,20 @@ module.exports.destroy = async function(req,res){
 
             // deleting the comment
             comment.deleteOne();
-            req.flash('success','Comment deleted successfully'); // setting flash message
-            res.redirect('back');
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        commentId: req.params.id
+                    },
+                    message: "Comment deleted succesfully",
+                    flash: {
+                        success: "Comment deleted successfully"
+                    }
+                })
+            }else{
+                req.flash('success','Comment deleted successfully'); // setting flash message
+                res.redirect('back');
+            }
         }else{
             req.flash('success',"You aren't authorized to delete this comment");
             res.redirect('back');

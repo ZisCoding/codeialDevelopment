@@ -8,6 +8,7 @@ module.exports.home= async function (req, res){
     // populate will insert the user to the recieved post obj corresponding to the user id in the user field of post
    try{
         let posts = await Post.find({})
+        .sort('-createdAt') // sorting in the recent post to late post order 
         .populate('user')
         .populate({
             path : 'comments',
