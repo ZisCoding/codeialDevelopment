@@ -12,13 +12,30 @@ module.exports.profile = function(req,res){
     })
 }
 
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
     // checking if the user in params is same as the logged in user 
     if(req.user.id==req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body)
-        .then((user)=>{
-            return res.redirect('back');
-        })
+
+        let user = await User.findById(req.params.id);
+
+        // here we are accessing the static funtion we defined inside User model also the multer middleware will be called with that
+        User.uploadedAvatar(req , res , function(error){
+            if(error){
+                console.log("**** Multer Error: ",error);
+                res.redirect('back');
+            }
+            user.name=req.body.name;
+            user.email=req.body.email;
+            // if there is any file
+            if(req.file){
+                // saving the path of saved file to the db 
+                user.avatar = User.avatarPath+'/'+req.file.filename; // avatarPath static variable was also declared at user model
+            }
+            
+            user.save();
+        });
+
+        res.redirect('back');
     }else{
         // sending this error if some fidelled in the front end
         res.status(401).send('Unauthorized');

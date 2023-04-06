@@ -27,6 +27,7 @@ const flash = require('connect-flash')
 // requiring out custom middleware
 const customMware = require('./config/middleware');
 
+
 // using sass middleware which compiles files written in sass to css
 app.use(sassMiddleware({
     src: path.join(__dirname,'/assets/scss'), // where to look for scss files
