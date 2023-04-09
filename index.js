@@ -44,8 +44,9 @@ app.use(express.urlencoded());
 app.use(cookieParse());
 
 // defining where to look for statics files css,js
-app.use(express.static('./assets'));
-
+app.use(express.static(__dirname+'/assets'));
+// any request coming with /uploads whould look for static files in " __dirname+'/uploads' "
+app.use('/uploads/',express.static(__dirname+'/uploads'));
 
 // telling express server to use expressLayouts we have to put it b4 route
 app.use(expressLayouts);

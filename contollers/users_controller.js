@@ -1,5 +1,8 @@
 const User = require('../models/user');
 
+const fs = require('fs');
+const path = require('path');
+
 module.exports.profile = function(req,res){
 
     User.findById(req.params.id)
@@ -28,11 +31,26 @@ module.exports.update = async function(req,res){
             user.email=req.body.email;
             // if there is any file
             if(req.file){
-                // saving the path of saved file to the db 
-                user.avatar = User.avatarPath+'/'+req.file.filename; // avatarPath static variable was also declared at user model
+
+                // cheking if there is alreadty a avatart file present if yes then deleting it
+                if(fs.existsSync(path.join(__dirname,'..',user.avatar))){
+                     // deleting the already exist avatar file
+                     fs.unlinkSync(path.join(__dirname,'..',user.avatar), (err) => {
+                        if (err) {
+                          console.error(err);
+                          return;
+                        }
+                      });
+                    // saving the path of new saved file to the db 
+                    user.avatar = User.avatarPath+'/'+req.file.filename; // avatarPath static variable was also declared at user model
+                    user.save();
+                }else{
+                    // saving the path of  saved file to the db 
+                    user.avatar = User.avatarPath+'/'+req.file.filename; // avatarPath static variable was also declared at user model
+                    user.save();
+                }
+
             }
-            
-            user.save();
         });
 
         res.redirect('back');
