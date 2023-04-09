@@ -18,6 +18,8 @@ const session = require('express-session')
 const passport = require('passport');
 // required the local passport strat which we defined
 const passportLocal = require('./config/passport-local-strategy')
+// requiring the passport-jwt-strategy 
+const passportJwt = require('./config/passport-jwt-strategy');
 //requiring connect mongo to store our session cookies so that it wont get erased after restarting server
 const MongoStore = require('connect-mongo');
 // requring sass middleware
