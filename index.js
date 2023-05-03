@@ -20,6 +20,8 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy')
 // requiring the passport-jwt-strategy 
 const passportJwt = require('./config/passport-jwt-strategy');
+// requiring the passport's google strategy
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 //requiring connect mongo to store our session cookies so that it wont get erased after restarting server
 const MongoStore = require('connect-mongo');
 // requring sass middleware
