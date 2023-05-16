@@ -1,9 +1,9 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const commentsMailer = require('../mailer/comment_mailer');
 
 
 module.exports.create = async (req,res)=>{
-
     try{
         // finding the post first in case the user have changed the value of post at the frontend
         let post = await Post.findById(req.body.post)
@@ -25,6 +25,7 @@ module.exports.create = async (req,res)=>{
             //populating the commebt to get user name
             let populatedComment = await comment.populate('user')
             
+            commentsMailer.newComment(populatedComment);
 
             // checking if the request is a xhr request
             if(req.xhr){
