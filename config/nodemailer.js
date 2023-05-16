@@ -13,7 +13,7 @@ let transporter = nodemailer.createTransport({
         pass: 'Sj9AYEPCygWm21pY2p'
     }
 });
-// currently I am not sure what this funtion is doing but Ig it will render the emails 
+// this function will render the ejs templates in html format for emails which are defined insdie views/mailers
 let renderTemplate = (data , relativePath) => {
     let mailHTML;
     ejs.renderFile(
@@ -21,14 +21,14 @@ let renderTemplate = (data , relativePath) => {
         data,
         function(err,template){
             if(err){
-                console.log("error in rendering template"); return;
+                console.log("error in rendering template",err); return;
             }
 
             mailHTML=template
-            return mailHTML;
+            
         }
     )
-    
+    return mailHTML;
 }
 
 
