@@ -9,8 +9,8 @@ let transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: { // credentials of the account we are  using to send email
-        user: 'cole95@ethereal.email',
-        pass: 'Sj9AYEPCygWm21pY2p'
+        user: 'broderick.macgyver97@ethereal.email',
+        pass: 'argEGPJjXqJHGZ9RX1'
     }
 });
 // this function will render the ejs templates in html format for emails which are defined insdie views/mailers

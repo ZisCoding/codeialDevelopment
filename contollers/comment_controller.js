@@ -1,6 +1,8 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 const commentsMailer = require('../mailer/comment_mailer');
+const queues = require('../config/bull');
+const commentEmailWorker = require('../worker/comment_email_worker');
 
 
 module.exports.create = async (req,res)=>{
@@ -25,7 +27,10 @@ module.exports.create = async (req,res)=>{
             //populating the commebt to get user name
             let populatedComment = await comment.populate('user')
             
-            commentsMailer.newComment(populatedComment);
+            // commentsMailer.newComment(populatedComment); //this is not using delayed job for emails
+
+            // adding the sending mail job to the email queue
+            queues.emailQueue.add({object: populatedComment});
 
             // checking if the request is a xhr request
             if(req.xhr){
