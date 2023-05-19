@@ -51,6 +51,7 @@ module.exports.update = async function(req,res){
                 }
 
             }
+            user.save();
         });
 
         res.redirect('back');

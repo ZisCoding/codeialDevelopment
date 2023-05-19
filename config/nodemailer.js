@@ -5,12 +5,12 @@ const path = require('path');
 // creating the tranporter funtion to tranfer mails
 let transporter = nodemailer.createTransport({
     // the mail service provider where the email server is hosted
-    host: 'smtp.ethereal.email',
+    host: 'smtp-relay.sendinblue.com',
     port: 587,
     secure: false,
     auth: { // credentials of the account we are  using to send email
-        user: 'broderick.macgyver97@ethereal.email',
-        pass: 'argEGPJjXqJHGZ9RX1'
+        user: 'zishanpublic@gmail.com',
+        pass: 'nRq2QpWdX8w9jCIP'
     }
 });
 // this function will render the ejs templates in html format for emails which are defined insdie views/mailers
